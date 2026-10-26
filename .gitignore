@@ -1,0 +1,24 @@
+# Trained weights. The five per-domain checkpoints are ~27 MB of co-authored
+# model state and are not redistributed here; see README.
+*.pth
+*.pkl
+*.joblib
+*.txt.gz
+checkpoints/
+
+# Dataset-derived media. The demo clips come from CDnet2014, LASIESTA, SBI,
+# ShanghaiTech and StreetScene, whose terms do not permit redistribution --
+# obtain them from their own maintainers and rebuild the clips locally.
+*.mp4
+*.avi
+html_demo/
+demo_bundle*/
+videos/
+
+# Generated artifacts
+cache/
+*.zip
+*.tar.gz
+__pycache__/
+*.pyc
+.DS_Store

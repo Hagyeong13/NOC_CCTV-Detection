@@ -1,0 +1,46 @@
+{
+  "target_fpr": 0.05,
+  "split": "indomain_70_10_20 adapt (seed 0)",
+  "domains": {
+    "cdnet": {
+      "threshold": 0.7264497310895212,
+      "achieved_fpr": 0.04997369805365597,
+      "recall_at_threshold": 0.648630594522378,
+      "n_clips": 9,
+      "n_frames": 3398,
+      "pos_rate": 0.4405532666274279
+    },
+    "lasiesta": {
+      "threshold": 0.16201505727581886,
+      "achieved_fpr": 0.045816733067729085,
+      "recall_at_threshold": 0.9915338645418327,
+      "n_clips": 12,
+      "n_frames": 3012,
+      "pos_rate": 0.6666666666666666
+    },
+    "sbi": {
+      "threshold": 0.438077630149578,
+      "achieved_fpr": 0.049490538573508006,
+      "recall_at_threshold": 0.8768115942028986,
+      "n_clips": 18,
+      "n_frames": 2340,
+      "pos_rate": 0.4128205128205128
+    },
+    "shanghaitech": {
+      "threshold": 0.5164347762073027,
+      "achieved_fpr": 0.041343669250646,
+      "recall_at_threshold": 0.8472998137802608,
+      "n_clips": 9,
+      "n_frames": 1698,
+      "pos_rate": 0.31625441696113077
+    },
+    "streetscene": {
+      "threshold": 0.538468028964163,
+      "achieved_fpr": 0.0390625,
+      "recall_at_threshold": 0.7262569832402235,
+      "n_clips": 3,
+      "n_frames": 563,
+      "pos_rate": 0.31793960923623443
+    }
+  }
+}

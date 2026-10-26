@@ -1,0 +1,169 @@
+{
+  "split": "indomain_70_10_20 test",
+  "seed": 0,
+  "min_frames": 80,
+  "scenes": 37,
+  "clips": [
+    {
+      "id": "baseline_office_s1200_e1300_minimax",
+      "dataset": "cdnet",
+      "scene": "baseline_office_s1200_e1300",
+      "variant": "minimax",
+      "truth": "manipulated",
+      "n_frames": 200,
+      "label": "cdnet / baseline_office_s1200_e1300 / clip 1",
+      "truth_segments": [
+        {
+          "start_frame": 100,
+          "end_frame": 200,
+          "n_frames": 101
+        }
+      ],
+      "truth_frames": 200,
+      "truth_positive": 101,
+      "truth_is_cliplevel": false
+    },
+    {
+      "id": "baseline_office_s1200_e1300_PRISTINE",
+      "dataset": "cdnet",
+      "scene": "baseline_office_s1200_e1300",
+      "variant": "pristine",
+      "truth": "clean",
+      "n_frames": 200,
+      "label": "cdnet / baseline_office_s1200_e1300 / clip 2",
+      "truth_segments": [],
+      "truth_frames": 200,
+      "truth_positive": 0,
+      "truth_is_cliplevel": false
+    },
+    {
+      "id": "LAS_I_SM_01_PRISTINE",
+      "dataset": "lasiesta",
+      "scene": "LAS_I_SM_01",
+      "variant": "pristine",
+      "truth": "clean",
+      "n_frames": 241,
+      "label": "lasiesta / LAS_I_SM_01 / clip 1",
+      "truth_segments": [],
+      "truth_frames": 241,
+      "truth_positive": 0,
+      "truth_is_cliplevel": false
+    },
+    {
+      "id": "LAS_I_SM_01_minimax",
+      "dataset": "lasiesta",
+      "scene": "LAS_I_SM_01",
+      "variant": "minimax",
+      "truth": "manipulated",
+      "n_frames": 241,
+      "label": "lasiesta / LAS_I_SM_01 / clip 2",
+      "truth_segments": [
+        {
+          "start_frame": 1,
+          "end_frame": 241,
+          "n_frames": 241
+        }
+      ],
+      "truth_frames": 241,
+      "truth_positive": 241,
+      "truth_is_cliplevel": true
+    },
+    {
+      "id": "O_SM_04_PRISTINE",
+      "dataset": "lasiesta",
+      "scene": "O_SM_04",
+      "variant": "pristine",
+      "truth": "clean",
+      "n_frames": 341,
+      "label": "lasiesta / O_SM_04 / clip 1",
+      "truth_segments": [],
+      "truth_frames": 341,
+      "truth_positive": 0,
+      "truth_is_cliplevel": false
+    },
+    {
+      "id": "O_SM_04_minimax",
+      "dataset": "lasiesta",
+      "scene": "O_SM_04",
+      "variant": "minimax",
+      "truth": "manipulated",
+      "n_frames": 341,
+      "label": "lasiesta / O_SM_04 / clip 2",
+      "truth_segments": [
+        {
+          "start_frame": 1,
+          "end_frame": 341,
+          "n_frames": 341
+        }
+      ],
+      "truth_frames": 341,
+      "truth_positive": 341,
+      "truth_is_cliplevel": true
+    },
+    {
+      "id": "Candela_m1.10_clip03_PRISTINE",
+      "dataset": "sbi",
+      "scene": "Candela_m1.10_clip03",
+      "variant": "pristine",
+      "truth": "clean",
+      "n_frames": 180,
+      "label": "sbi / Candela_m1.10_clip03 / clip 1",
+      "truth_segments": [],
+      "truth_frames": 180,
+      "truth_positive": 0,
+      "truth_is_cliplevel": false
+    },
+    {
+      "id": "Candela_m1.10_clip03_minimax",
+      "dataset": "sbi",
+      "scene": "Candela_m1.10_clip03",
+      "variant": "minimax",
+      "truth": "manipulated",
+      "n_frames": 180,
+      "label": "sbi / Candela_m1.10_clip03 / clip 2",
+      "truth_segments": [
+        {
+          "start_frame": 100,
+          "end_frame": 180,
+          "n_frames": 81
+        }
+      ],
+      "truth_frames": 180,
+      "truth_positive": 81,
+      "truth_is_cliplevel": false
+    },
+    {
+      "id": "train019_pristine",
+      "dataset": "streetscene",
+      "scene": "train019",
+      "variant": "pristine",
+      "truth": "clean",
+      "n_frames": 187,
+      "label": "streetscene / train019 / clip 1",
+      "truth_segments": [],
+      "truth_frames": 188,
+      "truth_positive": 0,
+      "truth_is_cliplevel": false
+    },
+    {
+      "id": "train019_minimax",
+      "dataset": "streetscene",
+      "scene": "train019",
+      "variant": "minimax",
+      "truth": "manipulated",
+      "n_frames": 187,
+      "label": "streetscene / train019 / clip 2",
+      "truth_segments": [
+        {
+          "start_frame": 99,
+          "end_frame": 187,
+          "n_frames": 89
+        }
+      ],
+      "truth_frames": 187,
+      "truth_positive": 89,
+      "truth_is_cliplevel": false
+    }
+  ],
+  "note": "menu restricted to scenes verified correct on all three variants; full candidate pool in clips_all_candidates.json"
+}
