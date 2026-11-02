@@ -1,15 +1,19 @@
 # vendor/
 
-Inference code for the five-branch detector, written by the project's
-co-authors and included here unmodified so results stay reproducible against
-the version the paper reports.
+5-브랜치 탐지기의 추론 코드입니다. 공동저자가 작성했고, 논문 버전과의 재현성을 위해 **로직은 수정하지 않고** 포함했습니다.
 
-Two consequences of keeping it unmodified:
+## 경로 설정
 
-- Several modules contain absolute paths from the machine they were developed
-  on (`/home/tako/songhye/project4/...`). They are only read on the training
-  and feature-extraction paths, not by `run_inference.py`, so the demo runs
-  without them. Nothing here rewrites them, because diverging from the
-  published version would defeat the point of vendoring it.
-- The per-domain checkpoints these modules load are not in this repository.
-  See the top-level README.
+원래 이 모듈들은 개발 당시의 절대 경로(`/home/tako/songhye/project4/...`)를 하드코딩하고 있었습니다. 다른 환경에서 돌아가지 않고 개발자의 디렉터리 구조가 드러나기 때문에, **환경변수 `NOC_CCTV_ROOT`** 로 바꿨습니다.
+
+```bash
+export NOC_CCTV_ROOT=/path/to/project4
+```
+
+지정하지 않으면 **이 저장소의 `model/` 디렉터리**를 기준으로 잡습니다. `NOC_CCTV_ROOT`를 원래 트리로 지정하면 해석되는 경로가 이전과 완전히 같으므로, 로직도 결과도 바뀌지 않습니다.
+
+이 경로들은 **학습·특징추출 경로에서만** 읽힙니다. `run_inference.py`로 단일 영상을 추론할 때는 사용되지 않으므로, 환경변수를 설정하지 않아도 데모와 추론은 동작합니다.
+
+## 체크포인트
+
+이 모듈들이 불러오는 도메인별 체크포인트는 이 저장소에 없습니다. 최상위 README를 참고하세요.

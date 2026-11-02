@@ -24,14 +24,23 @@ import re
 import sys
 from collections import defaultdict
 
-sys.path.insert(0, "/home/tako/songhye/project4")
+# The project root was hard-coded to the machine this was written on, which
+# makes the module unusable elsewhere and leaks a developer's directory layout.
+# Take it from the environment, defaulting to the repository root (the parent of
+# this vendor/ directory) so a clone works without configuration. The resolved
+# paths are identical when NOC_CCTV_ROOT points at the original tree, so this
+# changes no logic and no result.
+_PROJECT_ROOT = os.environ.get(
+    "NOC_CCTV_ROOT",
+    os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")))
+sys.path.insert(0, _PROJECT_ROOT)
 
 import numpy as np
 from sklearn.metrics import roc_auc_score
 import compare_weight_models as cw
 import lightgbm as lgb
 
-BASE = "/home/tako/songhye/project4/outputs_combined_lasiesta_static/feature_context_report/blob_features"
+BASE = f"{_PROJECT_ROOT}/outputs_combined_lasiesta_static/feature_context_report/blob_features"
 SEED = 0
 ACT_THRESH = 2.7  # same activity threshold as retrain_eval_honest_cdnet_v4.py
 PARAMS = dict(n_estimators=1500, num_leaves=15, learning_rate=0.03)

@@ -28,8 +28,17 @@ import re
 import sys
 import time
 
-sys.path.insert(0, "/home/tako/songhye/project4")
-sys.path.insert(0, "/home/tako/songhye/project4/scripts_2026_07_29")
+# The project root was hard-coded to the machine this was written on, which
+# makes the module unusable elsewhere and leaks a developer's directory layout.
+# Take it from the environment, defaulting to the repository root (the parent of
+# this vendor/ directory) so a clone works without configuration. The resolved
+# paths are identical when NOC_CCTV_ROOT points at the original tree, so this
+# changes no logic and no result.
+_PROJECT_ROOT = os.environ.get(
+    "NOC_CCTV_ROOT",
+    os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")))
+sys.path.insert(0, _PROJECT_ROOT)
+sys.path.insert(0, f"{_PROJECT_ROOT}/scripts_2026_07_29")
 
 import cv2
 import numpy as np
@@ -55,9 +64,9 @@ import train_eval_bisfd_pooled_split as bisfd
 # labels one frame the other way.
 FRAME_ALIGN_FIXED = True
 
-ALL_DATASETS_FINAL = "/home/tako/songhye/project4/all_datasets_final"
-SHANGHAITECH_TESTSET = "/home/tako/songhye/project4/dataset_add/shanghaitech_testset"
-STREETSCENE_TESTSET = "/home/tako/songhye/project4/dataset_add/streetscene_testset"
+ALL_DATASETS_FINAL = f"{_PROJECT_ROOT}/all_datasets_final"
+SHANGHAITECH_TESTSET = f"{_PROJECT_ROOT}/dataset_add/shanghaitech_testset"
+STREETSCENE_TESTSET = f"{_PROJECT_ROOT}/dataset_add/streetscene_testset"
 
 MAP_SIZE = 32
 W = 16

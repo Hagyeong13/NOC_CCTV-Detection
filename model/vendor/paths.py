@@ -7,7 +7,16 @@ version of each shared module, imported directly.
 import os
 import sys
 
-ROOT = "/home/tako/songhye/project4"
+# The project root was hard-coded to the machine this was written on, which
+# makes the module unusable elsewhere and leaks a developer's directory layout.
+# Take it from the environment, defaulting to the repository root (the parent of
+# this vendor/ directory) so a clone works without configuration. The resolved
+# paths are identical when NOC_CCTV_ROOT points at the original tree, so this
+# changes no logic and no result.
+_PROJECT_ROOT = os.environ.get(
+    "NOC_CCTV_ROOT",
+    os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")))
+ROOT = _PROJECT_ROOT
 SHARED_CODE = f"{ROOT}/scripts_2026_07_29"       # forensic_map_encoder_model_a, patch_mil_model,
                                                     # temporal_frequency_model, train_eval_bisfd_pooled_split,
                                                     # compare_weight_models, lodo_fusion -- all fixed 2026-09-22

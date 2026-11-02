@@ -30,7 +30,17 @@ direction consistent across all 3 seeds.
 import csv
 import sys
 
-sys.path.insert(0, "/home/tako/songhye/project4/scripts_2026_07_29")
+import os
+# The project root was hard-coded to the machine this was written on, which
+# makes the module unusable elsewhere and leaks a developer's directory layout.
+# Take it from the environment, defaulting to the repository root (the parent of
+# this vendor/ directory) so a clone works without configuration. The resolved
+# paths are identical when NOC_CCTV_ROOT points at the original tree, so this
+# changes no logic and no result.
+_PROJECT_ROOT = os.environ.get(
+    "NOC_CCTV_ROOT",
+    os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")))
+sys.path.insert(0, f"{_PROJECT_ROOT}/scripts_2026_07_29")
 
 import numpy as np
 import torch
@@ -44,8 +54,8 @@ import patch_mil_model as pmm
 import temporal_frequency_model as tfm
 import train_eval_bisfd_pooled_split as bisfd
 
-CSV_PATH = "/home/tako/songhye/project4/outputs_combined_lasiesta_static/feature_context_report/blob_features/all_domains_codeccontrol_with_compression_rows.csv"
-CODEC_ROOT = "/home/tako/songhye/project4/codec_controlled_datasets"
+CSV_PATH = f"{_PROJECT_ROOT}/outputs_combined_lasiesta_static/feature_context_report/blob_features/all_domains_codeccontrol_with_compression_rows.csv"
+CODEC_ROOT = f"{_PROJECT_ROOT}/codec_controlled_datasets"
 DOMAINS = ["lasiesta", "shanghaitech", "cdnet", "streetscene", "sbi"]
 SEEDS = [0, 1, 2]
 K = 32
