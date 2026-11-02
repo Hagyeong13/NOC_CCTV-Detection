@@ -286,8 +286,14 @@ def main():
         if ffmpeg and codec != "h264":
             subprocess.run([ffmpeg, "-y", "-loglevel", "error", "-i", src,
                             "-c:v", "libx264", "-pix_fmt", "yuv420p",
-                            "-preset", "veryfast", "-movflags", "+faststart", dst],
-                           check=True)
+                            # Quality matters here: these clips ARE the demo.
+                            # ffmpeg's defaults (CRF 23 at -preset veryfast)
+                            # threw away 80-86% of the source bitrate, plainly
+                            # visible at 352x288. CRF 18 at -preset slow is
+                            # near-transparent, and these clips are seconds
+                            # long, so the extra megabytes do not matter.
+                            "-crf", "18", "-preset", "slow",
+                            "-movflags", "+faststart", dst], check=True)
             n_conv += 1
         else:
             shutil.copy2(src, dst)

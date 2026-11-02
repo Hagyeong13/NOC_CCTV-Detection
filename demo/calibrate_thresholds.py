@@ -89,11 +89,38 @@ def threshold_at_fpr(y, s, target_fpr):
     return float(thr[i]), float(fpr[i]), float(tpr[i])
 
 
+def all_criteria(y, s):
+    """Every threshold rule on one ROC, so the choice can be argued rather
+    than assumed. Textbooks usually teach Youden's J or the point closest to
+    (0,1); this project fixes the false-positive rate instead, because in a
+    forensic setting a false alarm and a miss do not cost the same and the
+    alarm rate is the operational constraint. Reporting all of them makes the
+    cost of that choice visible instead of hidden."""
+    from sklearn.metrics import roc_curve
+    fpr, tpr, thr = roc_curve(y, s)
+    out = {}
+
+    for target in (0.05, 0.10):
+        i = int(np.searchsorted(fpr, target, side="right") - 1)
+        i = max(0, min(i, len(thr) - 1))
+        out[f"fixed_fpr_{target:g}"] = (float(thr[i]), float(fpr[i]), float(tpr[i]))
+
+    j = int(np.argmax(tpr - fpr))
+    out["youden_j"] = (float(thr[j]), float(fpr[j]), float(tpr[j]))
+
+    d = int(np.argmin(fpr ** 2 + (1 - tpr) ** 2))
+    out["closest_to_01"] = (float(thr[d]), float(fpr[d]), float(tpr[d]))
+
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--fpr", type=float, default=0.10)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default=OUT)
+    ap.add_argument("--dump-scores",
+                    help="adapt-split 프레임 점수를 이 JSON에 저장 (재계산용)")
     args = ap.parse_args()
 
     sys.path.insert(0, HERE)
@@ -101,6 +128,7 @@ def main():
 
     lab = load_labels()
     clips = adapt_clips(args.seed)
+    dumps = {}
     result = {"target_fpr": args.fpr, "split": f"indomain_70_10_20 adapt (seed {args.seed})",
               "domains": {}}
 
@@ -126,6 +154,18 @@ def main():
             print(f"{dom:14s} SKIPPED (clips={used}, frames={len(ys)}, "
                   f"classes={len(set(ys))})", flush=True)
             continue
+        crit = all_criteria(np.array(ys), np.array(ss))
+        result["domains_criteria"] = result.get("domains_criteria", {})
+        result["domains_criteria"][dom] = {
+            k: {"threshold": v[0], "fpr": v[1], "recall": v[2]}
+            for k, v in crit.items()}
+        # Keep the raw adapt-split scores: re-deriving a threshold rule should
+        # not require another 20 minutes of inference.
+        if args.dump_scores:
+            dumps[dom] = {"y": ys, "s": ss}
+        print(f"  [{dom}] 기준별 임계값")
+        for k, (t_, f_, r_) in crit.items():
+            print(f"     {k:16s} thr={t_:.4f}  FPR={f_:.4f}  recall={r_:.4f}")
         thr, fpr, tpr = threshold_at_fpr(np.array(ys), np.array(ss), args.fpr)
         result["domains"][dom] = {"threshold": thr, "achieved_fpr": fpr,
                                   "recall_at_threshold": tpr, "n_clips": used,
@@ -136,6 +176,10 @@ def main():
 
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
+    if args.dump_scores and dumps:
+        with open(args.dump_scores, "w", encoding="utf-8") as f:
+            json.dump(dumps, f)
+        print(f"wrote {args.dump_scores} (adapt-split 점수)")
     print(f"\nwrote {args.out}")
     thin = [d for d, v in result["domains"].items() if v["n_clips"] < 6]
     if thin:
