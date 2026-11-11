@@ -234,6 +234,11 @@ def main():
         '<span class="sub">Patch-MIL 4×4 히트맵, 대략적인 영역만 표시</span>',
         '<span class="sub">조작 의심 구간이 타임라인에 표시됩니다</span>')
 
+    # Footer removed at the user's request. Line-anchored so it cannot run on
+    # past its own line the way the heatToggle pattern once did.
+    html = re.sub(r"^  <footer>모든 클립은 학습에 사용되지 않은 test 분할이에요.*?</footer>\n",
+                  "", html, flags=re.M)
+
     html = html.replace("drawChart(); drawBranches(); drawSummary(); drawAnswer(); setFrame(frame);",
                         LOADER)
 
